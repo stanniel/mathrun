@@ -16,81 +16,87 @@
         }
 
 
-      /*  function getOperation(last_operation){
+        function getOperation(last_operation){
             var result = getRandomInt(1,4);
-            return (result != last_operation) ? result : ((result > 1) ? result-1 : result+1);
+            return (result !== last_operation) ? result : ((result > 1) ? result-1 : result+1);
         }
+
+        function multiplicationOperand(operand1){
+            switch(operand1){
+                case 1: return getRandomInt(1,99);
+                    break;
+                case 2: return getRandomInt(1,49);
+                    break;
+                case 3: return getRandomInt(1,33);
+                    break;
+                case 4: return getRandomInt(1,24);
+                    break;
+                case 5: return getRandomInt(1,19);
+                    break;
+                case 6: return getRandomInt(1,16);
+                    break;
+                case 7: return getRandomInt(1,14);
+                    break;
+                case 8: return getRandomInt(1,12);
+                    break;
+                case 9: return getRandomInt(1,11);
+                    break;
+            }
+        }
+
         //operation 1 = +; 2 = -; 3 = *; 4 = /;
-        function createOperands(result,operation){
-            var operand1, operand2;
+        function createOperands(operation){
+            var operand1, operand2, result, op;
             switch(operation){
-                case 1: operand1 = getRandomInt(1,result-1);
-                        operand2 = result - operand1;
-                        break;
-                case 2: operand1 = getRandomInt(1,result);
-            }
-        }
-*/
+                case 1: operand1 = getRandomInt(1,98);
+                        operand2 = 99 - operand1;
+                        result = operand1 + operand2;
+                        op = "+";
+                    break;
+                case 2: operand1 = getRandomInt(1,99);
+                        operand2 = getRandomInt(1,98);
+                        result = (operand1 > operand2) ? operand1 - operand2 : operand2 - operand1;
+                        op = "-";
+                    break;
+                case 3: operand1 = getRandomInt(1,9);
+                        operand2 = multiplicationOperand(operand1);
+                        result = operand1 * operand2;
+                        op = "*";
+                    break;
 
-        function makeProblem(){
-            var op1 = getRandomInt(1,99);
-            var op2 = getRandomInt(1,99);
+                case 4: operand1 = getRandomInt(1,9);
+                        operand2 = multiplicationOperand(operand1);
+                        result = operand1 * operand2;
 
-            var op = getRandomInt(1,4);
+                        var temp_op = result;
+                        var order = getRandomInt(1,2);
 
-            if(op == 1){
-                while(op1 + op2 > 99){
-                    op1 = getRandomInt(1,99);
-                    op2 = getRandomInt(1,99);
-                }
+                        result = (order === 1) ? operand1 : operand2;
+                        operand2 = (order === 1) ? operand2 : operand1;
+                        operand1 = temp_op;
 
-                $("#operand1").html(op1);
-                $("#operand2").html(op2);
-                $("#op").html("+");
-                $("#result").val(op1+op2);
-            }
-
-            if(op == 2){
-                while(op1 - op2 < 1){
-                    op1 = getRandomInt(1,99);
-                    op2 = getRandomInt(1,99);
-                }
-
-                $("#operand1").html(op1);
-                $("#operand2").html(op2);
-                $("#op").html("-");
-                $("#result").val(op1-op2);
+                        op = "/";
+                    break;
             }
 
-            if(op == 3){
-                while(op1 * op2 > 99){
-                    op1 = getRandomInt(1,99);
-                    op2 = getRandomInt(1,99);
-                }
-
-                $("#operand1").html(op1);
-                $("#operand2").html(op2);
-                $("#op").html("*");
-                $("#result").val(op1*op2);
-            }
-
-            if(op == 4){
-                while( (op1 / op2) < 1 || (op1 / op2) % 1 !== 0 ){
-                    op1 = getRandomInt(1,99);
-                    op2 = getRandomInt(1,99);
-                }
-
-                $("#operand1").html(op1);
-                $("#operand2").html(op2);
-                $("#op").html("/");
-                $("#result").val(op1/op2);
-            }
-
+            return {op1: operand1, op2: operand2, rez: result, op: op};
         }
 
-        makeProblem();
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            return (parts.length === 2) ? parts.pop().split(";").shift() : "";
+        }
+
+        var last_operation = (getCookie("last_operation") !== "") ? getCookie("last_operation") : 0;
+        var operation = getOperation(parseInt(last_operation));
+        var problem = createOperands(operation);
+        document.cookie = "last_operation="+operation;
+
+        $("#operand1").html(problem.op1);
+        $("#operand2").html(problem.op2);
+        $("#op").html(problem.op);
+        $("#result").val(problem.rez);
 
     });
-
-
 </script>
