@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Math-test</title>
+</head>
+<body>
+<span id="operand1"></span><span id="op"></span><span id="operand2"></span><span>=</span><input type="text" id="result">
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+
+      /*  function getOperation(last_operation){
+            var result = getRandomInt(1,4);
+            return (result != last_operation) ? result : ((result > 1) ? result-1 : result+1);
+        }
+        //operation 1 = +; 2 = -; 3 = *; 4 = /;
+        function createOperands(result,operation){
+            var operand1, operand2;
+            switch(operation){
+                case 1: operand1 = getRandomInt(1,result-1);
+                        operand2 = result - operand1;
+                        break;
+                case 2: operand1 = getRandomInt(1,result);
+            }
+        }
+*/
+
+        function makeProblem(){
+            var op1 = getRandomInt(1,99);
+            var op2 = getRandomInt(1,99);
+
+            var op = getRandomInt(1,4);
+
+            if(op == 1){
+                while(op1 + op2 > 99){
+                    op1 = getRandomInt(1,99);
+                    op2 = getRandomInt(1,99);
+                }
+
+                $("#operand1").html(op1);
+                $("#operand2").html(op2);
+                $("#op").html("+");
+                $("#result").val(op1+op2);
+            }
+
+            if(op == 2){
+                while(op1 - op2 < 1){
+                    op1 = getRandomInt(1,99);
+                    op2 = getRandomInt(1,99);
+                }
+
+                $("#operand1").html(op1);
+                $("#operand2").html(op2);
+                $("#op").html("-");
+                $("#result").val(op1-op2);
+            }
+
+            if(op == 3){
+                while(op1 * op2 > 99){
+                    op1 = getRandomInt(1,99);
+                    op2 = getRandomInt(1,99);
+                }
+
+                $("#operand1").html(op1);
+                $("#operand2").html(op2);
+                $("#op").html("*");
+                $("#result").val(op1*op2);
+            }
+
+            if(op == 4){
+                while( (op1 / op2) < 1 || (op1 / op2) % 1 !== 0 ){
+                    op1 = getRandomInt(1,99);
+                    op2 = getRandomInt(1,99);
+                }
+
+                $("#operand1").html(op1);
+                $("#operand2").html(op2);
+                $("#op").html("/");
+                $("#result").val(op1/op2);
+            }
+
+        }
+
+        makeProblem();
+
+    });
+
+
+</script>
