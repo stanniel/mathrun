@@ -55,6 +55,11 @@
                     break;
                 case 2: operand1 = getRandomInt(1,99);
                         operand2 = getRandomInt(1,98);
+                        if(operand1 < operand2){
+                            var temp_operand = operand1;
+                            operand1 = operand2;
+                            operand2 = temp_operand;
+                        }
                         result = (operand1 > operand2) ? operand1 - operand2 : operand2 - operand1;
                         op = "-";
                     break;
