@@ -49,7 +49,7 @@
             var operand1, operand2, result, op;
             switch(operation){
                 case 1: operand1 = getRandomInt(1,98);
-                        operand2 = 99 - operand1;
+                        operand2 = getRandomInt(1, 99 - operand1);
                         result = operand1 + operand2;
                         op = "+";
                     break;
@@ -59,6 +59,9 @@
                             var temp_operand = operand1;
                             operand1 = operand2;
                             operand2 = temp_operand;
+                        }
+                        if(operand1 === operand2){
+                            operand1 = getRandomInt(operand2+1,99);
                         }
                         result = (operand1 > operand2) ? operand1 - operand2 : operand2 - operand1;
                         op = "-";
